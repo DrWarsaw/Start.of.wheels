@@ -1,0 +1,25 @@
+const wallToWallLength = 1 // inches
+const thickness = .35 // inches
+const diameter = 0.7 // inches
+
+
+// Define a function for the hex nut
+fn hexNut = (start, thk, innerDia) => {
+  const hexNutSketch = startSketchOn('-XZ')
+    |> startProfileAt([start[0] + innerDia, start[1]], %)
+    |> angledLine({ angle: 240, length: innerDia }, %)
+    |> angledLine({ angle: 180, length: innerDia }, %)
+    |> angledLine({ angle: 120, length: innerDia }, %)
+    |> angledLine({ angle: 60, length: innerDia }, %)
+    |> angledLine({ angle: 0, length: innerDia * .90 }, %)
+    |> close(%)
+    |> hole(circle({
+         center: [start[0], start[1]],
+         radius: innerDia / 2
+       }, %), %)
+    |> extrude(thk, %)
+  return hexNutSketch
+}
+
+// Create a hex nut
+hexNut([0, 0], thickness, diameter)
